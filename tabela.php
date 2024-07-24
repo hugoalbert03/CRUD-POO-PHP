@@ -11,25 +11,39 @@
     </style>
 </head>
 <body>
-    <a href="index.php">Voltar</a>
+    <a href="index.php" target="__self">Voltar</a>
     <table border="1">
         <tr>
-            <th>ID</th>
             <th>Nome</th>
             <th>Matricula</th>
             <th>Turma</th>
             <th>Turno</th>
             <th>Modalidade</th>
+            <th colspan="2">Controles</th>
         </tr>
-       <?php 
-            require_once 'classCadastro.php'; 
-            $cad = new Aluno($indice, $nome, $matricula, $turma, $turno, $curso);  
-            echo "<tr>"; 
-            foreach($cad as $dados){
-                echo "<td> $dados </td>";
+       <?php           
+            $conteudo = file_get_contents("dados.txt");
+            $vals = explode(";",$conteudo);
+            
+            
+            
+            if($conteudo == false){
+                echo "<h3 style='color:red;'>Registro sem valor</h3>";
+            } else {
+                foreach($vals as $valores){
+                    $v = explode(",", $valores);
+                    echo "<tr>";   
+                        foreach($v as $dados){
+                            echo "<td>$dados</td>";
+                        }    
+                        echo "<td><a href='editar.php'>Editar</a></td>";
+                        echo "<td><a href=''>Excluir</a></td>";
+                    echo "</tr>";
+                
+                }
+                
             }
-            echo "</tr>";
-            #var_dump($cad)
+         
         ?>
     </table>
 </body>
